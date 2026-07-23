@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Invoice — Xpress Printing Toolkit</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="page">
+  <header class="bar">
+    <div class="logo">XP</div>
+    <h1 id="bizName">XPRESS PRINTING</h1>
+    <select id="userSel" title="User"></select>
+  </header>
+
+  <h2 class="section"><span data-i18n="invoice">Invoice</span> <span id="invNo" style="color:var(--muted);font-weight:600"></span></h2>
+
+  <div class="card">
+    <div class="row">
+      <label class="field"><span data-i18n="customerName">Customer name</span>
+        <input id="custName" type="text">
+      </label>
+      <label class="field"><span data-i18n="customerPhone">Customer phone</span>
+        <input id="custPhone" type="text">
+      </label>
+    </div>
+  </div>
+
+  <div class="card">
+    <table class="dims" id="itemsTable">
+      <thead>
+        <tr style="text-align:left">
+          <th style="width:45%" data-i18n="description">Description</th>
+          <th data-i18n="quantity">Quantity</th>
+          <th data-i18n="unitPrice">Unit price</th>
+          <th data-i18n="amount">Amount</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="itemRows"></tbody>
+    </table>
+    <button class="ghost" id="addItem" style="margin-top:8px" data-i18n="addItem">Add item</button>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <label class="field"><span data-i18n="discountLbl">Discount</span>
+        <input id="discount" type="number" min="0" value="0">
+      </label>
+      <label class="field"><span>VAT %</span>
+        <input id="vatRate" type="number" min="0" max="100" value="0">
+      </label>
+    </div>
+    <table class="dims">
+      <tr><td data-i18n="subtotal">Subtotal</td><td id="subtotal">0</td></tr>
+      <tr><td data-i18n="vatLbl">VAT</td><td id="vatAmount">0</td></tr>
+      <tr><td style="font-weight:800" data-i18n="grandTotal">GRAND TOTAL</td><td id="grand" style="font-weight:800;color:var(--brand)">0</td></tr>
+    </table>
+  </div>
+
+  <div class="saveBar">
+    <button class="primary" id="downloadPdf" data-i18n="downloadPdf">Download PDF</button>
+    <button class="ghost" id="newInvoice" data-i18n="newInvoice">New invoice</button>
+    <span class="savedMsg" id="savedMsg">✓</span>
+  </div>
+
+  <h2 class="section" data-i18n="history">Recent invoices</h2>
+  <div class="card">
+    <ul class="quoteLines" id="historyList"></ul>
+  </div>
+
+  <script src="shared.js"></script>
+  <script src="xpt-pdf.js"></script>
+  <script src="invoice.js"></script>
+</body>
+</html>

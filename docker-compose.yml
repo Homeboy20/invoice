@@ -1,0 +1,46 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: printdesk
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in your environment}
+      POSTGRES_DB: printdesk
+    volumes:
+      - printdesk_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U printdesk"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  printdesk:
+    build: .
+    ports:
+      - "4100:4100"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - PORT=4100
+      - DATABASE_URL=postgresql://printdesk:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in your environment}@db:5432/printdesk
+      - JWT_SECRET=${JWT_SECRET:?Set JWT_SECRET in your environment — generate with: openssl rand -hex 32}
+      - SITE_URL=${SITE_URL:-http://localhost:4100}
+      # Admin panel is optional — leave unset to disable /admin entirely.
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-}
+      # Billing is optional per-gateway — leave a gateway's vars unset to hide its button.
+      - PAYPAL_CLIENT_ID=${PAYPAL_CLIENT_ID:-}
+      - PAYPAL_CLIENT_SECRET=${PAYPAL_CLIENT_SECRET:-}
+      - PAYPAL_ENVIRONMENT=${PAYPAL_ENVIRONMENT:-sandbox}
+      - CLICKPESA_API_KEY=${CLICKPESA_API_KEY:-}
+      - CLICKPESA_CLIENT_ID=${CLICKPESA_CLIENT_ID:-}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4100/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+volumes:
+  printdesk_pgdata:
+    driver: local

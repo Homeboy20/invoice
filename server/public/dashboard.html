@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Settings — PrintDesk</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="page" data-page="dashboard">
+  <header class="bar">
+    <div class="logo">PD</div>
+    <h1 id="bizName">PrintDesk</h1>
+    <nav>
+      <a href="dashboard.html" data-page="dashboard">Settings</a>
+      <a href="invoices.html" data-page="invoices">Invoices</a>
+      <a href="billing.html" data-page="billing">Billing</a>
+    </nav>
+    <button class="logout" id="logoutBtn">Log out</button>
+  </header>
+
+  <h2 class="section">Business</h2>
+  <div class="card">
+    <label class="field"><span>Business name (appears on invoices)</span>
+      <input id="businessName" type="text">
+    </label>
+    <label class="field"><span>Address (one line per row, shown on invoices)</span>
+      <textarea id="businessAddress" rows="2"></textarea>
+    </label>
+    <div class="row">
+      <label class="field"><span>Business phone</span>
+        <input id="businessPhone" type="text" placeholder="+255 7XX XXX XXX">
+      </label>
+      <label class="field"><span>Business email</span>
+        <input id="businessEmail" type="text" placeholder="info@example.co.tz">
+      </label>
+    </div>
+    <div class="row">
+      <label class="field"><span>TIN (optional)</span>
+        <input id="tin" type="text">
+      </label>
+      <label class="field"><span>VRN (optional)</span>
+        <input id="vrn" type="text">
+      </label>
+    </div>
+    <div class="row">
+      <label class="field"><span>WhatsApp number (digits only)</span>
+        <input id="whatsappNumber" type="text" placeholder="2557XXXXXXXX">
+      </label>
+      <label class="field"><span>Currency label</span>
+        <input id="currency" type="text" value="TZS">
+      </label>
+    </div>
+    <label class="field"><span>Logo for invoices (PNG/JPG)</span>
+      <input id="logoFile" type="file" accept="image/*">
+    </label>
+    <div id="logoPreviewWrap" style="display:none;margin-top:8px">
+      <img id="logoPreview" alt="logo" style="max-height:60px;border-radius:6px;display:block;margin-bottom:8px">
+      <button class="ghost" id="removeLogo" type="button">Remove logo</button>
+    </div>
+  </div>
+
+  <h2 class="section">Staff</h2>
+  <div class="card">
+    <p class="mutedNote" style="margin-bottom:8px">Every invoice records which staff member served the customer.</p>
+    <ul class="list" id="staffList"></ul>
+    <div class="row" style="margin-top:8px">
+      <input id="newStaffName" type="text" placeholder="Staff name">
+      <button class="ghost" id="addStaff" type="button">Add</button>
+    </div>
+    <div class="errorMsg" id="staffErr"></div>
+  </div>
+
+  <h2 class="section">Invoice settings</h2>
+  <div class="card">
+    <div class="row">
+      <label class="field"><span>Invoice number prefix</span>
+        <input id="invoicePrefix" type="text" value="INV">
+      </label>
+      <label class="field"><span>Language</span>
+        <select id="language">
+          <option value="en">English</option>
+          <option value="sw">Kiswahili</option>
+        </select>
+      </label>
+    </div>
+    <div class="row">
+      <label class="field" style="display:flex;align-items:center;gap:8px;flex-direction:row">
+        <input id="vatEnabled" type="checkbox" style="width:auto">
+        <span style="margin:0">Charge VAT</span>
+      </label>
+      <label class="field"><span>VAT rate %</span>
+        <input id="vatRate" type="number" min="0" max="100">
+      </label>
+      <label class="field"><span>Accent color</span>
+        <input id="accentColor" type="color" value="#d92027" style="height:38px;padding:2px">
+      </label>
+    </div>
+    <label class="field"><span>Invoice footer / terms</span>
+      <textarea id="invoiceTerms" rows="2"></textarea>
+    </label>
+  </div>
+
+  <h2 class="section">Price list</h2>
+  <div class="card">
+    <div class="row">
+      <label class="field"><span>Banner — per m²</span>
+        <input id="p_bannerPerSqm" type="number" min="0">
+      </label>
+      <label class="field"><span>Large format — per m²</span>
+        <input id="p_largeFormatPerSqm" type="number" min="0">
+      </label>
+    </div>
+    <div class="row">
+      <label class="field"><span>Stickers — per m²</span>
+        <input id="p_stickerPerSqm" type="number" min="0">
+      </label>
+      <label class="field"><span>Teardrop banner — per unit</span>
+        <input id="p_teardropBanner" type="number" min="0">
+      </label>
+    </div>
+    <div class="row">
+      <label class="field"><span>T-shirt — per shirt</span>
+        <input id="p_tshirt" type="number" min="0">
+      </label>
+      <label class="field"><span>T-shirt bulk price — per shirt</span>
+        <input id="p_tshirtBulk" type="number" min="0">
+      </label>
+    </div>
+    <div class="row">
+      <label class="field"><span>Bulk applies from quantity</span>
+        <input id="p_tshirtBulkQty" type="number" min="2">
+      </label>
+      <label class="field"><span>Business cards — per 100</span>
+        <input id="p_businessCards100" type="number" min="0">
+      </label>
+    </div>
+    <div class="row">
+      <label class="field"><span>Mug printing — per mug</span>
+        <input id="p_mugPrint" type="number" min="0">
+      </label>
+      <label class="field"><span>Logo design — flat fee</span>
+        <input id="p_logoDesign" type="number" min="0">
+      </label>
+    </div>
+  </div>
+
+  <div class="saveBar">
+    <button class="primary" id="save">Save settings</button>
+    <span class="savedMsg" id="savedMsg">Saved ✓</span>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

@@ -1,4 +1,3 @@
-# node:sqlite (used for all storage) needs Node 24+ to run without an experimental flag.
 FROM node:24-alpine
 
 WORKDIR /app
@@ -14,13 +13,14 @@ RUN cd server && npm ci --omit=dev
 COPY src/xpt-pdf.js ./src/xpt-pdf.js
 COPY server ./server
 
-RUN mkdir -p /app/data && chown -R node:node /app
+RUN chown -R node:node /app
 USER node
 
 ENV PORT=4100
-ENV DATA_DIR=/app/data
 EXPOSE 4100
 
+# Actually pings the database (see index.js) — a broken DATABASE_URL fails this, not
+# just "the Node process is alive".
 HEALTHCHECK --interval=30s --timeout=10s --start-period=20s --retries=3 \
   CMD curl -f http://localhost:4100/healthz || exit 1
 

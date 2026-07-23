@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Billing — PrintDesk</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="page" data-page="billing">
+  <header class="bar">
+    <div class="logo">PD</div>
+    <h1 id="bizName">PrintDesk</h1>
+    <nav>
+      <a href="dashboard.html" data-page="dashboard">Settings</a>
+      <a href="invoices.html" data-page="invoices">Invoices</a>
+      <a href="billing.html" data-page="billing">Billing</a>
+    </nav>
+    <button class="logout" id="logoutBtn">Log out</button>
+  </header>
+
+  <h2 class="section">Your plan</h2>
+  <div class="card" id="planCard">
+    <p class="mutedNote">Loading…</p>
+  </div>
+
+  <h2 class="section">Free plan limits</h2>
+  <div class="card">
+    <table class="dims">
+      <tr><td>Invoices this month</td><td id="invoiceUsage">—</td></tr>
+      <tr><td>Staff users</td><td id="staffUsage">—</td></tr>
+      <tr><td>PDF watermark</td><td id="watermarkNote">—</td></tr>
+    </table>
+  </div>
+
+  <h2 class="section">Premium — <span id="priceLabel">$9 or 25,000 TZS / 30 days</span></h2>
+  <div class="card">
+    <ul class="list">
+      <li><span>Unlimited invoices</span><span>✓</span></li>
+      <li><span>Unlimited staff users</span><span>✓</span></li>
+      <li><span>No watermark on PDFs</span><span>✓</span></li>
+    </ul>
+    <p class="mutedNote" style="margin:10px 0">
+      Each payment adds 30 days of Premium — renew any time, including before it runs out.
+      No auto-renewal, no card kept on file.
+    </p>
+    <div class="saveBar" style="margin:0;padding:0">
+      <button class="primary" id="paypalBtn">Pay with PayPal — $9</button>
+      <button class="wa" id="clickpesaBtn">Pay with Mobile Money — 25,000 TZS</button>
+    </div>
+    <div id="clickpesaPending" class="mutedNote" style="display:none;margin-top:10px">
+      Waiting for mobile money confirmation —
+      <button class="ghost" id="clickpesaRecheck" type="button" style="padding:4px 10px">Check status</button>
+    </div>
+    <div class="errorMsg" id="err"></div>
+    <div class="mutedNote" id="notConfiguredNote" style="display:none">
+      Neither payment method is set up on this server yet — see server/README.md for how the site owner enables PayPal and/or ClickPesa.
+    </div>
+  </div>
+
+  <h2 class="section">Payment history</h2>
+  <div class="card">
+    <ul class="list" id="paymentHistory"><li>No payments yet.</li></ul>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="billing.js"></script>
+</body>
+</html>

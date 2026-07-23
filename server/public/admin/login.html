@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin — PrintDesk</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body class="authPage">
+  <div class="authCard">
+    <div class="brand"><div class="logo">PD</div><span>PrintDesk Admin</span></div>
+    <h2>Platform admin</h2>
+    <p class="sub">Operator access only — manages every business on this server.</p>
+
+    <label class="field"><span>Admin password</span>
+      <input id="password" type="password" autocomplete="current-password">
+    </label>
+    <button class="primary" id="submit" style="width:100%">Log in</button>
+    <div class="errorMsg" id="err"></div>
+  </div>
+
+  <script src="admin-app.js"></script>
+  <script>
+    document.getElementById('submit').addEventListener('click', async () => {
+      const password = document.getElementById('password').value;
+      const err = document.getElementById('err');
+      err.textContent = '';
+      const btn = document.getElementById('submit');
+      btn.disabled = true;
+      try {
+        const data = await pdaApi('/login', { method: 'POST', body: { password } });
+        pdaSetToken(data.token);
+        location.href = 'index.html';
+      } catch (e) {
+        err.textContent = e.message;
+      } finally {
+        btn.disabled = false;
+      }
+    });
+    document.getElementById('password').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') document.getElementById('submit').click();
+    });
+  </script>
+</body>
+</html>

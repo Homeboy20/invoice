@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Xpress Printing Toolkit",
+  "version": "1.0.0",
+  "description": "Print shop toolkit: instant quotes in TZS, print-quality checker for any image, and WhatsApp quote composer. English & Swahili.",
+  "author": "XPRESS PRINTING TANZANIA",
+  "homepage_url": "https://xpressprinting.co.tz",
+  "permissions": ["storage", "contextMenus"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Xpress Printing Toolkit"
+  },
+  "options_page": "options.html",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

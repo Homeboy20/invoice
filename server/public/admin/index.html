@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Dashboard — PrintDesk</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    body.page { max-width: 980px; }
+    .statGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 0 16px 16px; }
+    .stat { border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+    .stat .n { font-size: 22px; font-weight: 800; }
+    .stat .l { font-size: 12px; color: var(--muted); }
+    table.admin { width: 100%; border-collapse: collapse; font-size: 13px; }
+    table.admin th { text-align: left; font-size: 11px; color: var(--muted); padding: 6px 8px; border-bottom: 1px solid var(--line); }
+    table.admin td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+    .pill { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+    .pill.premium { background: rgba(21,128,61,.12); color: var(--ok); }
+    .pill.free { background: var(--chip); color: var(--muted); }
+    table.admin button { font-size: 11px; padding: 4px 8px; }
+  </style>
+</head>
+<body class="page" data-page="admin">
+  <header class="bar">
+    <div class="logo">PD</div>
+    <h1>PrintDesk Admin</h1>
+    <button class="logout" id="logoutBtn">Log out</button>
+  </header>
+
+  <h2 class="section">Overview</h2>
+  <div class="statGrid" id="stats">
+    <div class="stat"><div class="n">—</div><div class="l">Loading…</div></div>
+  </div>
+
+  <h2 class="section">Businesses</h2>
+  <div class="card">
+    <input id="search" type="text" placeholder="Search by name or email…" style="margin-bottom:10px">
+    <div style="overflow-x:auto">
+      <table class="admin" id="bizTable">
+        <thead>
+          <tr>
+            <th>Business</th><th>Plan</th><th>Premium until</th>
+            <th>Invoices</th><th>Staff</th><th>Joined</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="bizRows"></tbody>
+      </table>
+    </div>
+    <div class="errorMsg" id="bizErr"></div>
+  </div>
+
+  <h2 class="section">Recent payments</h2>
+  <div class="card">
+    <div style="overflow-x:auto">
+      <table class="admin">
+        <thead><tr><th>Date</th><th>Business</th><th>Provider</th><th>Amount</th><th>Days</th></tr></thead>
+        <tbody id="paymentRows"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="admin-app.js"></script>
+  <script src="admin-dashboard.js"></script>
+</body>
+</html>

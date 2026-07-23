@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Settings — Xpress Printing Toolkit</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="page">
+  <header class="bar">
+    <div class="logo">XP</div>
+    <h1>Xpress Printing Toolkit — Settings</h1>
+  </header>
+
+  <h2 class="section">Business</h2>
+  <div class="card">
+    <label class="field"><span>Business name (appears on quotes)</span>
+      <input id="businessName" type="text">
+    </label>
+    <label class="field"><span>WhatsApp number — international format, digits only (e.g. 2557XXXXXXXX)</span>
+      <input id="whatsappNumber" type="text" placeholder="2557XXXXXXXX">
+    </label>
+    <div class="row">
+      <label class="field"><span>Language</span>
+        <select id="language">
+          <option value="en">English</option>
+          <option value="sw">Kiswahili</option>
+        </select>
+      </label>
+      <label class="field"><span>Currency label</span>
+        <input id="currency" type="text" value="TZS">
+      </label>
+    </div>
+  </div>
+
+  <h2 class="section">Price list</h2>
+  <div class="card">
+    <div class="row">
+      <label class="field"><span>Banner — per m²</span>
+        <input id="p_bannerPerSqm" type="number" min="0">
+      </label>
+      <label class="field"><span>Large format — per m²</span>
+        <input id="p_largeFormatPerSqm" type="number" min="0">
+      </label>
+    </div>
+    <div class="row">
+      <label class="field"><span>Stickers — per m²</span>
+        <input id="p_stickerPerSqm" type="number" min="0">
+      </label>
+      <label class="field"><span>Teardrop banner — per unit</span>
+        <input id="p_teardropBanner" type="number" min="0">
+      </label>
+    </div>
+    <div class="row">
+      <label class="field"><span>T-shirt — per shirt</span>
+        <input id="p_tshirt" type="number" min="0">
+      </label>
+      <label class="field"><span>T-shirt bulk price — per shirt</span>
+        <input id="p_tshirtBulk" type="number" min="0">
+      </label>
+    </div>
+    <div class="row">
+      <label class="field"><span>Bulk applies from quantity</span>
+        <input id="p_tshirtBulkQty" type="number" min="2">
+      </label>
+      <label class="field"><span>Business cards — per 100</span>
+        <input id="p_businessCards100" type="number" min="0">
+      </label>
+    </div>
+    <div class="row">
+      <label class="field"><span>Mug printing — per mug</span>
+        <input id="p_mugPrint" type="number" min="0">
+      </label>
+      <label class="field"><span>Logo design — flat fee</span>
+        <input id="p_logoDesign" type="number" min="0">
+      </label>
+    </div>
+  </div>
+
+  <div class="saveBar">
+    <button class="primary" id="save">Save settings</button>
+    <span class="savedMsg" id="savedMsg">Saved ✓</span>
+  </div>
+
+  <script src="shared.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Invoices — PrintDesk</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="page" data-page="invoices">
+  <header class="bar">
+    <div class="logo">PD</div>
+    <h1 id="bizName">PrintDesk</h1>
+    <nav>
+      <a href="dashboard.html" data-page="dashboard">Settings</a>
+      <a href="invoices.html" data-page="invoices">Invoices</a>
+      <a href="billing.html" data-page="billing">Billing</a>
+    </nav>
+    <button class="logout" id="logoutBtn">Log out</button>
+  </header>
+
+  <h2 class="section">New invoice</h2>
+  <div class="card">
+    <div class="row">
+      <label class="field"><span>Customer name</span>
+        <input id="custName" type="text">
+      </label>
+      <label class="field"><span>Customer phone</span>
+        <input id="custPhone" type="text">
+      </label>
+      <label class="field"><span>Served by</span>
+        <select id="servedBy"></select>
+      </label>
+    </div>
+  </div>
+
+  <div class="card">
+    <table class="dims" id="itemsTable">
+      <thead>
+        <tr>
+          <th style="width:45%;text-align:left">Description</th>
+          <th>Quantity</th>
+          <th>Unit price</th>
+          <th>Amount</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="itemRows"></tbody>
+    </table>
+    <button class="ghost" id="addItem" style="margin-top:10px">Add item</button>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <label class="field"><span>Discount</span>
+        <input id="discount" type="number" min="0" value="0">
+      </label>
+      <label class="field"><span>VAT %</span>
+        <input id="vatRate" type="number" min="0" max="100" value="0">
+      </label>
+    </div>
+    <table class="dims">
+      <tr><td>Subtotal</td><td id="subtotal">0</td></tr>
+      <tr><td>VAT</td><td id="vatAmount">0</td></tr>
+      <tr><td style="font-weight:800">GRAND TOTAL</td><td id="grand" style="font-weight:800;color:var(--brand)">0</td></tr>
+    </table>
+  </div>
+
+  <div class="saveBar">
+    <button class="primary" id="saveInvoice">Save &amp; download PDF</button>
+    <button class="ghost" id="newInvoice">Clear form</button>
+    <span class="savedMsg" id="savedMsg">Saved ✓</span>
+  </div>
+  <div class="errorMsg" id="err" style="margin:0 16px 16px"></div>
+
+  <h2 class="section">Recent invoices</h2>
+  <div class="card">
+    <ul class="list" id="historyList"></ul>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="invoices.js"></script>
+</body>
+</html>

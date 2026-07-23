@@ -1,0 +1,6 @@
+server/node_modules/
+.env
+
+# Chrome Web Store upload — a build artifact, not source. Regenerate from src/ with
+# the tar command in README.md, or attach it to a GitHub Release instead of committing it.
+*.zip
