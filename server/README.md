@@ -70,7 +70,7 @@ is identical:
 
 1. Push this project to its own git repo (or a subfolder of one Coolify can build from).
 2. In Coolify: **New Resource → Docker Compose**, point it at this project's root
-   (where `Dockerfile` and `docker-compose.yml` live). Compose brings up both the app
+   (where `Dockerfile` and `docker-compose.yaml` live). Compose brings up both the app
    and its `db` (Postgres) service — Coolify doesn't need a separate managed database
    resource unless you'd rather use one.
 3. Set environment variables:

@@ -76,5 +76,5 @@ server/         PrintDesk — the hosted multi-tenant web app, API, and billing
 DESIGN.md       Extension design decisions
 store-listing.md  Copy-paste text for the Chrome Web Store listing
 PRIVACY.md      Extension privacy policy (no data collection)
-Dockerfile, docker-compose.yml   Build/run PrintDesk in a container
+Dockerfile, docker-compose.yaml   Build/run PrintDesk in a container
 ```
