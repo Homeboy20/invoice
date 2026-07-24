@@ -22,7 +22,11 @@ services:
         condition: service_healthy
     environment:
       - PORT=4100
-      - DATABASE_URL=postgresql://printdesk:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in your environment}@db:5432/printdesk
+      # sslmode=disable: the "db" service has no SSL configured (it's reached over the
+      # private Docker network, not the public internet) — without this, lib/db.js's
+      # hostname-only heuristic sees "db" (not "localhost") and wrongly assumes SSL is
+      # required, which the container then refuses ("server does not support SSL").
+      - DATABASE_URL=postgresql://printdesk:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in your environment}@db:5432/printdesk?sslmode=disable
       - JWT_SECRET=${JWT_SECRET:?Set JWT_SECRET in your environment — generate with: openssl rand -hex 32}
       - SITE_URL=${SITE_URL:-http://localhost:4100}
       # Admin panel is optional — leave unset to disable /admin entirely.

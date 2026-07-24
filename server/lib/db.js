@@ -18,9 +18,36 @@ const crypto = require('node:crypto');
 types.setTypeParser(20, (val) => parseInt(val, 10));
 
 const PG_POOL_MAX = Math.max(1, parseInt(process.env.PG_POOL_MAX || '20', 10));
-const connectionString = process.env.DATABASE_URL || '';
-const isLocalDB = !connectionString || connectionString.includes('localhost') || connectionString.includes('127.0.0.1');
-const sslConfig = isLocalDB ? false : { rejectUnauthorized: process.env.PG_SSL_REJECT_UNAUTHORIZED !== 'false' };
+
+// Determine SSL from an explicit ?sslmode=... in DATABASE_URL before stripping it from
+// the string — pg-connection-string would otherwise parse sslmode from the URL itself
+// too and could disagree with the explicit `ssl` option passed to Pool below (same
+// defensive pattern this codebase's RestOrder platform uses in server.js). Our own
+// docker-compose.yml sets sslmode=disable explicitly, since the bundled `db` service
+// reaches the app over the private Docker network by its service name (`db:5432`) —
+// not "localhost" — so the old hostname-only heuristic wrongly required SSL against a
+// Postgres container that doesn't have it configured at all ("the server does not
+// support SSL connections"). The heuristic is kept as a fallback for a bare
+// DATABASE_URL with no sslmode at all (e.g. plain local dev).
+const rawConnectionString = process.env.DATABASE_URL || '';
+let connectionString = rawConnectionString;
+let explicitSslMode = '';
+try {
+  const u = new URL(rawConnectionString);
+  explicitSslMode = u.searchParams.get('sslmode') || '';
+  u.searchParams.delete('sslmode');
+  connectionString = u.toString();
+} catch { /* empty or non-URL DATABASE_URL — use as-is */ }
+
+let sslConfig;
+if (explicitSslMode === 'disable') {
+  sslConfig = false;
+} else if (explicitSslMode) {
+  sslConfig = { rejectUnauthorized: process.env.PG_SSL_REJECT_UNAUTHORIZED !== 'false' };
+} else {
+  const isLocalDB = !rawConnectionString || rawConnectionString.includes('localhost') || rawConnectionString.includes('127.0.0.1');
+  sslConfig = isLocalDB ? false : { rejectUnauthorized: process.env.PG_SSL_REJECT_UNAUTHORIZED !== 'false' };
+}
 
 const pool = new Pool({
   connectionString,
